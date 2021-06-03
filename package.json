@@ -1,0 +1,21 @@
+{
+  "name": "electron-chatapp",
+  "version": "1.0.0",
+  "description": "A chatapp",
+  "author": "Wiwi",
+  "scripts": {
+    "start": "electron ."
+  },
+  "main": "main.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^4.1.2"
+  },
+  "devDependencies": {
+    "electron": "^13.0.1",
+    "electron-builder": "^22.10.5",
+    "express": "^4.17.1",
+    "socket.io": "^4.1.2"
+  },
+  "license": "ISC"
+}

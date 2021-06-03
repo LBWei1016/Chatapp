@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatroom</title>
+  </head>
+  <body>
+    <form>
+      <input type="text" id="mes">
+      <input type="submit" id="submitButton" value="submit">
+    </form>
+    <ul id="messages"></ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <!--for the usage of moment-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
+  </body>
+  
+    <!--client request-->>
+    <script>
+      let _userName = "";
+      let _roomName = "" ;
+      let _id = "";
+      var socket = io();
+
+      socket.on('send data', function(data) {
+        _id = data.id;
+        _userName = data.userName;
+        _roomName = data.roomName;
+        console.log(_userName + '\'s id is: ' + _id);
+      });
+
+      document.getElementById('mes').focus();
+      document.getElementsByTagName('form')[0].addEventListener('submit', (event) => {
+        
+        //to avoid current page being re-urled
+        event.preventDefault();
+
+        //send the texts in message(text) box to server
+        socket.emit('chat message', {
+          value: document.getElementById('mes').value,
+          user: _userName,
+          room: _roomName 
+        });
+
+        //clear the content message(text) box
+        document.getElementById('mes').value = '';
+      });
+
+
+      socket.on('chat message', (data) => {
+          console.log(data.data.user + ': ' + data.id);
+          displayMessage(data);
+        });
+
+      function displayMessage(data) {
+        let authorClass = '';
+        let divClass = '';
+        if(data.id === _id) {
+          console.log(data.data.user + " has send a message!");
+          authorClass = "me";
+          divClass = "myDiv";
+        } else {
+          authorClass = "you";
+          divClass = "yoourDiv";
+        }
+
+        const div = document.createElement('div');
+        const li = document.createElement('li');
+        const p = document.createElement('p');
+
+        div.className = divClass;
+        p.className = 'time';
+        p.innerText = moment().format('hh:mm');
+        div.innerHTML = 
+          '<p class="' + authorClass + '">' + 
+            data.data.user + " says:" + '</p>' + 
+          '<p class="message">' + data.data.value + 
+            '</p>';
+
+        document.getElementById('messages').appendChild(li);
+        li.appendChild(div);
+        div.appendChild(p);
+
+        window.scrollTo(0, document.body.scrollHeight);
+      };
+    </script>
+  
+</html>
