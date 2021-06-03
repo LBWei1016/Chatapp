@@ -11,3 +11,6 @@
 
 * No CSS applied
 
+---
+## Setup .exe:
+> <https://drive.google.com/file/d/1rLqb_EyvVt7JmS1CW4dRfE0m5vJqln-X/view?usp=sharing>
