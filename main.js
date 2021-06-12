@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
-require('./express/app.js');
+//require('./express/app.js'); 
+//app.js(server) ¥t¥~¶}
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
